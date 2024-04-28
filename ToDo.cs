@@ -9,6 +9,7 @@ namespace minimal_api_csharp_todos
     {
         public int Id { get; set; }
         public string? Title { get; set; }
+        public bool IsActive { get; set; }
 
         public static bool TryParse(string? value, out ToDo toDo)
         {
@@ -18,7 +19,8 @@ namespace minimal_api_csharp_todos
                 toDo = new ToDo
                 {
                     Id = int.Parse(data?[0] ?? throw new ArgumentNullException(nameof(value))),
-                    Title = data?[1] ?? throw new ArgumentNullException(nameof(value))
+                    Title = data?[1] ?? throw new ArgumentNullException(nameof(value)),
+                    IsActive = bool.Parse(data?[2] ?? throw new ArgumentNullException(nameof(value)))
                 };
                 return true;
             }
@@ -28,9 +30,6 @@ namespace minimal_api_csharp_todos
                 return false;
             }
         }
-
-
-
 
         public static async ValueTask<ToDo> BindAsync(HttpContext context, ParameterInfo parameterInfo)
         {
@@ -42,7 +41,8 @@ namespace minimal_api_csharp_todos
                 var toDo = new ToDo
                 {
                     Id = int.Parse(data[0]),
-                    Title = data[1]
+                    Title = data[1],
+                    IsActive = bool.Parse(data[2])
                 };
                 return toDo;
             }

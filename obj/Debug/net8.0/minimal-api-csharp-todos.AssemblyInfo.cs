@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("minimal-api-csharp-todos")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2b02209464c40de6703f4015131f955ae9e5909")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a3c53d49a8507c076cb6a67451c2edb41870df2")]
 [assembly: System.Reflection.AssemblyProductAttribute("minimal-api-csharp-todos")]
 [assembly: System.Reflection.AssemblyTitleAttribute("minimal-api-csharp-todos")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
