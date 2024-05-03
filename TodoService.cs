@@ -47,14 +47,14 @@ namespace minimal_api_csharp_todos
             return todo;
         }
 
-public void Update(int id, string title, bool isActive)
-{
-    var todo = _todos.FirstOrDefault(t => t.Id == id);
-    if (todo is null) throw new Exception("Todo non trouvé");
+        public void Update(int id, string title, bool isActive)
+        {
+            var todo = _todos.FirstOrDefault(t => t.Id == id);
+            if (todo is null) throw new Exception("Todo non trouvé");
 
-    var updatedTodo = new ToDo(todo.Id, title, isActive);
-    _todos[_todos.IndexOf(todo)] = updatedTodo;
-}
+            var updatedTodo = new ToDo(todo.Id, title, isActive);
+            _todos[_todos.IndexOf(todo)] = updatedTodo;
+        }
 
 
     }
