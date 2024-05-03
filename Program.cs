@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+
 using minimal_api_csharp_todos;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +15,7 @@ app.MapGet("/getAll", ([FromServices] TodoService service) =>
 }
 );
 
-app.MapGet("/getActives", ([FromServices] TodoService service, bool IsActive) =>
+app.MapGet("/getActives", ([FromServices] TodoService service, bool isActive) =>
 {
     var todo = service.GetActives();
     if (todo.Any()) return Results.Ok(todo);
@@ -46,6 +43,11 @@ app.MapPut("/put/{id:int}", ([FromServices] TodoService service, int id, ToDo up
 {
     var todo = service.GetById(id);
     if (todo is null) return Results.NotFound("Todo non trouvé");
+
+    if (updatedTodo.Title is null)
+    {
+        return Results.BadRequest("Title cannot be null");
+    }
 
     service.Update(id, updatedTodo.Title, updatedTodo.IsActive);
     return Results.Ok("Todo mis à jour");
