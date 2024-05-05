@@ -1,12 +1,45 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-
 using minimal_api_csharp_todos;
+using minimal_api_csharp_todos.data.models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+var loggerConfiguration = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log.txt");
+var logger = loggerConfiguration.CreateLogger();
+builder.Logging.AddSerilog(logger);
+
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
 builder.Services.AddSingleton<TodoService>();
 
 var app = builder.Build();
+
+app.MapPost("/person", (
+    [FromBody] Person p,
+    [FromServices] IValidator<Person> validator) =>
+{
+    var result = validator.Validate(p);
+    if (!result.IsValid)
+    {
+        return Results.BadRequest(result.Errors);
+    }
+    return Results.Ok(p);
+});
+
+#region hello
+/*app.MapGet("/hello", ([FromServices] ILogger<Program> logger) =>
+    {
+        logger.LogInformation("je suis un log");
+        return Results.Ok("hello world");
+    }
+);*/
+#endregion
 
 app.MapGet("/getAll", ([FromServices] TodoService service) =>
 {
